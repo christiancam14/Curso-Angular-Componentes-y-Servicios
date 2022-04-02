@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from 'src/app/models/product.model';
 
+import { StoreService } from 'src/app/services/store.service';
+
+import { ProductsService } from 'src/app/services/products.service';
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -9,36 +13,33 @@ import { Product } from 'src/app/models/product.model';
 })
 export class ProductsComponent implements OnInit {
 
-  products: Product[] = [
-    {
-      id: '1',
-      name: 'EL mejor juguete',
-      price: 565,
-      image: './assets/images/toy.jpg'
-    },
-    {
-      id: '2',
-      name: 'Bicicleta casi nueva',
-      price: 356,
-      image: './assets/images/bike.jpg'
-    },
-    {
-      id: '3',
-      name: 'Colleción de albumnes',
-      price: 34,
-      image: './assets/images/album.jpg'
-    },
-    {
-      id: '4',
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/book.jpg'
-    },
-  ];
+  myShoppingCart: Product[] = [];
+  total = 0;
 
-  constructor() { }
+  products: Product[] = []
+  today = new Date(2019, 1,1);
+  date = new Date(2021, 1, 21);
+
+  constructor(
+    // Inyectar el servicio en el componente
+    private storeService: StoreService,
+    // Trae la información de los productos desde la API, es Async
+    private productsService: ProductsService
+  ) {
+    this.myShoppingCart = this.storeService.getShoppingCart();
+  }
 
   ngOnInit(): void {
+    this.productsService.getAllProducts()
+    .subscribe(data => {
+      this.products = data;
+    });
+  }
+
+  onAddToshoppingCart(product: Product){
+    this.myShoppingCart.push(product);
+    this.storeService.addProduct(product);
+    this.total = this.storeService.getTotal();
   }
 
 }
