@@ -1,23 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewInit, OnDestroy, SimpleChanges } from '@angular/core';
+// eslint-disable-next-line max-len
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-img',
   templateUrl: './img.component.html',
-  styleUrls: ['./img.component.scss']
+  styleUrls: ['./img.component.scss'],
 })
+// eslint-disable-next-line max-len
 export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-
   img: string = '';
 
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('img')
-  set changeImg(newImg: string){
+  set changeImg(newImg: string) {
     this.img = newImg;
     console.log('Change just img => ', this.img );
-    //code
+    // code
   }
   @Input() alt: string = '';
   @Output() loaded = new EventEmitter<string>();
-  imageDefault = "./assets/images/default.jpg";
+  imageDefault = './assets/images/default.jpg';
   // counter = 0;
   // counterFn: number | undefined;
 
@@ -27,7 +29,7 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
     console.log('Construnctor', 'imgValue =>', this.img);
   }
 
-  ngOnChanges(changes : SimpleChanges){
+  ngOnChanges(changes : SimpleChanges) {
     // Before - during render
     // Changes inputs -- times
     console.log('ngOnChanges', 'imgValue =>', this.img);
@@ -50,18 +52,20 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
     console.log('ngAfterViewInit');
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // Delete
-    console.log("ngOnDestroy");
+    console.log('ngOnDestroy');
     // window.clearInterval(this.counterFn);
   }
 
-  imgError(){
+  // eslint-disable-next-line require-jsdoc
+  imgError() {
     this.img = this.imageDefault;
   }
 
-  imgLoaded(){
-    console.log("Log hijo");
+  // eslint-disable-next-line require-jsdoc
+  imgLoaded() {
+    console.log('Log hijo');
     this.loaded.emit(this.img);
   }
 }
